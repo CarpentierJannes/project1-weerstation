@@ -1,0 +1,195 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+    <div class="o-container">
+        <div class="c-content-row">
+            <div class="o-layout o-layout--gutter">
+                <div class="o-layout__item u-2-of-3-bp4 u-1-of-1-bp2">
+                    <a href="/chart">
+                        <div class="c-block u-enlarge-hover">
+                            <div class="24h-graph">
+                                <canvas id="chart1" width="100" height="40"></canvas>
+                                <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.js"
+                                        integrity="sha256-vyehT44mCOPZg7SbqfOZ0HNYXjPKgBCaqxBkW3lh6bg="
+                                        crossorigin="anonymous"></script>
+                                <script>
+                                    var ctx = document.getElementById("chart1").getContext('2d');
+                                    var chartdata = {
+                                        type: 'line',
+                                        data: {
+                                            labels: [{% for label in graph1.labels %}'{{ label }}'{% if not loop.last %}, {% endif %}{% endfor %}],
+                                            datasets: [
+                                                {% for dataset in graph1.data %}
+                                                    {
+                                                        label: '{{ dataset.label }}',
+                                                        yAxisID: '{{ loop.index0 }}',
+                                                        data: {{ dataset.data }},
+                                                        backgroundColor: 'rgba(0,0,0,0)',
+                                                        borderColor: '{{ dataset.color }}',
+                                                        borderWidth: 2
+                                                    }
+                                                    {% if not loop.last %},{% endif %}
+                                                {% endfor %}
+                                            ]
+                                        },
+                                        options: {
+                                            elements: { point: { radius: 0, hitRadius: 5, hoverRadius: 5 } },
+                                            scales: {
+                                                yAxes: [{
+                                                    gridLines: {
+                                                        drawOnChartArea: false
+                                                    },
+                                                    id: '0',
+                                                    type: 'linear',
+                                                    position: 'left',
+                                                    weight: 4,
+                                                    ticks: {
+                                                        callback: function (value, index, values) {
+                                                            return value + "°C";
+                                                        }
+                                                    }
+                                                }, {
+                                                    gridLines: {
+                                                        drawOnChartArea: false
+                                                    },
+                                                    id: '1',
+                                                    type: 'linear',
+                                                    position: 'right',
+                                                    weight: 3,
+                                                    ticks: {
+                                                        callback: function (value, index, values) {
+                                                            return value + "%";
+                                                        }
+                                                    }
+                                                }]
+                                            }
+                                        }
+                                    };
+                                    var myChart = new Chart(ctx, chartdata);
+                                </script>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="o-layout__item u-1-of-3-bp4 u-1-of-1-bp2">
+                    <div class="c-block u-enlarge-hover">
+                        <div class="c-current-weather o-layout o-layout--gutter">
+                            <h1 class="o-layout__item u-clear-margin-top">Huidig Weer</h1>
+                            <p class="o-layout__item u-1-of-4 u-1-of-1-bp4">{{ currentweather[0] }}</p>
+                            <p class="o-layout__item u-1-of-4 u-1-of-1-bp4">{{ currentweather[1] }}</p>
+                            <p class="o-layout__item u-1-of-4 u-1-of-1-bp4">{{ currentweather[2] }}</p>
+                            <p class="o-layout__item u-1-of-4 u-1-of-1-bp4">{{ currentweather[3] }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="c-content-row">
+            <div class="o-layout">
+                <div class="o-layout__item u-1-of-1">
+                    <a href="/chart">
+                    <div class="c-block u-enlarge-hover">
+                        <div class="c-rain o-layout">
+                            <div class="o-layout__item u-1-of-3">
+                                <canvas id="donut" width="50" height="40"></canvas>
+                                <script>
+                                    Chart.pluginService.register({
+                                        beforeDraw: function (chart) {
+                                            if (chart.options.centertext) {
+                                                var width = chart.chart.width,
+                                                height = chart.chart.height,
+                                                ctx = chart.chart.ctx;
+                                                ctx.restore();
+                                                var fontSize = parseInt(height / 100);
+                                                ctx.font = fontSize + "em sans-serif";
+                                                ctx.textBaseline = "middle";
+                                                var text = chart.options.centertext,
+                                                textX = Math.round((width - ctx.measureText(text).width) / 2),
+                                                textY = height / 2 - (chart.titleBlock.height - 15);
+                                                ctx.fillText(text, textX, textY);
+                                                ctx.save();
+                                            }
+                                        }
+                                    });
+                                    var ctx = document.getElementById("donut").getContext('2d');
+                                    var chartdata = {
+                                        type: 'doughnut',
+                                        data: {
+                                            labels: ['droog', 'regen'],
+                                            datasets: [{
+                                                data: [100 - {{ graph2.percentage }}, {{ graph2.percentage }}],
+                                                backgroundColor: ['rgba(0,128,255,1)', 'rgba(0,0,255,1)']
+                                            }]
+                                        },
+                                        options: {
+                                            cutoutPercentage: 80,
+                                            centertext: '{{ graph2.percentage }}% regen',
+                                            legend: {
+                                                display: false
+                                            }
+                                        }
+                                    };
+                                    new Chart(ctx, chartdata);
+                                </script>
+                            </div>
+                            <div class="o-layout__item u-2-of-3">
+                                <canvas id="chart2" width="100" height="40"></canvas>
+                                <script>
+                                    var ctx = document.getElementById("chart2").getContext('2d');
+                                    var chartdata = {
+                                        type: 'bar',
+                                        data: {
+                                            labels: [{% for label in graph2.labels %}'{{ label }}'{% if not loop.last %}, {% endif %}{% endfor %}],
+                                            datasets: [
+                                                {% for dataset in graph2.data %}
+                                                    {
+                                                        label: '{{ dataset.label }}',
+                                                        data: {{ dataset.data }},
+                                                        backgroundColor: '{{ dataset.color }}',
+                                                        borderColor: '{{ dataset.color }}',
+                                                        borderWidth: 5
+                                                    }
+                                                    {% if not loop.last %},{% endif %}
+                                                {% endfor %}
+                                            ]
+                                        }
+                                    };
+                                    var myChart = new Chart(ctx, chartdata);
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="c-content-row">
+            <div class="o-layout">
+                <div class="o-layout__item u-1-of-1">
+                    <div class="c-block u-enlarge-hover">
+
+                        <div class="c-statistics o-layout o-layout--justify-center o-layout--gutter-lg">
+                            {% for set in stats %}
+                                {% if loop.last %}
+                                    <div class="o-layout__item u-1-of-5">
+                                {% else %}
+                                    <div class="u-vertical-line-right o-layout__item u-1-of-5">
+                                {% endif %}
+                            <div class="c-statistics__head">{{ set.name }}</div>
+                            <div class="c-statistics__data o-layout">
+                                {% for item in set.data %}
+                                    <p class="o-layout__item u-1-of-2 u-text-align-left">{{ item[0] }}:</p>
+                                    <p class="o-layout__item u-1-of-2 u-text-align-right">{{ item[1] }}°C</p>
+                                {% endfor %}
+                            </div>
+                            </div>
+                            {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+{% endblock %}

@@ -1,0 +1,229 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+    <div class="o-container">
+        <div class="c-content-row">
+            <div class="o-layout o-layout--gutter">
+                <div class="o-layout__item u-1-of-1">
+                    <div class="c-block o-layout o-layout--justify-space-between">
+                        <div class="c-graph-settings o-layout o-layout__item u-1-of-1">
+                            <script>
+                                function toggle_settings() {
+                                    el = document.getElementById('graph-settings-menu');
+                                    if (el.classList.contains('c-graph-settings-menu-hidden')) {
+                                        el.classList.remove('c-graph-settings-menu-hidden');
+                                        el.classList.add('c-graph-settings-menu-shown');
+                                        document.getElementById('graph-settings-svg').classList.add('u-flipped');
+                                    }
+                                    else {
+                                        el.classList.add('c-graph-settings-menu-hidden');
+                                        el.classList.remove('c-graph-settings-menu-shown');
+                                        document.getElementById('graph-settings-svg').classList.remove('u-flipped');
+                                    }
+                                }
+                            </script>
+                            <div onclick="toggle_settings()">
+                                <h1 class="c-graph-settings__title u-clear-margin-top">
+                                    Grafiek opties
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 22.5" height="25" width="50"
+                                         id="graph-settings-svg" class="c-graph-settings__svg">
+                                        <path id="Path_1" data-name="Path 1" fill="#5c6663"
+                                              d="M-90.5,103.5l15,15,15-15V111l-15,15-15-15v-7.5"
+                                              transform="translate(90.5 -103.5)"/>
+                                    </svg>
+                                </h1>
+                            </div>
+                        </div>
+                        <div class="o-layout o-layout__item u-1-of-1 c-graph-settings-menu c-graph-settings-menu-hidden" id="graph-settings-menu">
+                            <div class="o-layout__item u-1-of-3">
+                                <label for="temperatuur" class="c-graph-settings__label" onchange="toggleData('temperatuur')">
+                                    Temperatuur
+                                    <input type="checkbox" id="temperatuur" {% if graph.options.sensor.temperature %}checked{% endif %}>
+                                    <span class="c-graph-settings__label-checkmark"></span>
+                                </label>
+                                <label for="luchtvochtigheid" class="c-graph-settings__label" onchange="toggleData('luchtvochtigheid')">
+                                    Luchtvochtigheid
+                                    <input type="checkbox" id="luchtvochtigheid" {% if graph.options.sensor.humidity %}checked{% endif %}>
+                                    <span class="c-graph-settings__label-checkmark"></span>
+                                </label>
+                                <label for="luchtdruk" class="c-graph-settings__label" onchange="toggleData('luchtdruk')">
+                                    Luchtdruk
+                                    <input type="checkbox" id="luchtdruk" {% if graph.options.sensor.pressure %}checked{% endif %}>
+                                    <span class="c-graph-settings__label-checkmark"></span>
+                                </label>
+                                <label for="neerslag" class="c-graph-settings__label" onchange="toggleData('neerslag')">
+                                    Neerslag
+                                    <input type="checkbox" id="neerslag" {% if graph.options.sensor.rainfall %}checked{% endif %}>
+                                    <span class="c-graph-settings__label-checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="o-layout__item u-1-of-3">
+                                <label for="uur" class="c-graph-settings__label" onclick="redirectParam('period', 'hour')">
+                                    Afgelopen uur
+                                    <input type="radio" id="uur" name="periode" {% if graph.options.period == 'hour' %}checked{% endif %}>
+                                    <span class="c-graph-settings__label-checkmark"></span>
+                                </label>
+                                <label for="dag" class="c-graph-settings__label" onclick="redirectParam('period', 'day')">
+                                    Afgelopen dag
+                                    <input type="radio" id="dag" name="periode" {% if graph.options.period == 'day' %}checked{% endif %}>
+                                    <span class="c-graph-settings__label-checkmark"></span>
+                                </label>
+                                <label for="week" class="c-graph-settings__label" onclick="redirectParam('period', 'week');">
+                                    Afgelopen week
+                                    <input type="radio" id="week" name="periode" {% if graph.options.period == 'week' %}checked{% endif %}>
+                                    <span class="c-graph-settings__label-checkmark"></span>
+                                </label>
+                                <label for="maand" class="c-graph-settings__label" onclick="redirectParam('period', 'year')">
+                                    Afgelopen maand
+                                    <input type="radio" id="maand" name="periode" {% if graph.options.period == 'month' %}checked{% endif %}>
+                                    <span class="c-graph-settings__label-checkmark"></span>
+                                </label>
+                                <label for="jaar" class="c-graph-settings__label" onclick="redirectParam('period', 'year')">
+                                    Afgelopen jaar
+                                    <input type="radio" id="jaar" name="periode" {% if graph.options.period == 'year' %}checked{% endif %}>
+                                    <span class="c-graph-settings__label-checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="o-layout__item u-1-of-3">
+                                <label for="lijn" class="c-graph-settings__label" onchange="switchType()"> Lijn
+                                    <input type="radio" id="lijn" name="type" {% if graph.options.type == 'line' %}checked{% endif %}>
+                                    <span class="c-graph-settings__label-checkmark"></span>
+                                </label>
+                                <label for="staaf" class="c-graph-settings__label" onchange="switchType()"> Staaf
+                                    <input type="radio" id="staaf" name="type" {% if graph.options.type == 'bar' %}checked{% endif %}>
+                                    <span class="c-graph-settings__label-checkmark"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <canvas id="myChart" width="100" height="40"></canvas>
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.js"
+                                integrity="sha256-vyehT44mCOPZg7SbqfOZ0HNYXjPKgBCaqxBkW3lh6bg="
+                                crossorigin="anonymous"></script>
+                        <script>
+                            var ctx = document.getElementById("myChart").getContext('2d');
+                            var chartdata = {
+                                type: 'bar',
+                                data: {
+                                    labels: [{% for label in graph.labels %}'{{ label }}'{% if not loop.last %}, {% endif %}{% endfor %}],
+                                    datasets: [
+                                        {% for dataset in graph.data %}
+                                            {
+                                                label: '{{ dataset.label }}',
+                                                yAxisID: '{{ loop.index0 }}',
+                                                data: {{ dataset.data }},
+                                                backgroundColor: 'rgba(0,0,0,0)',
+                                                borderColor: '{{ dataset.color }}',
+                                                borderWidth: 5
+                                            }
+                                            {% if not loop.last %},{% endif %}
+                                        {% endfor %}
+                                    ]
+                                },
+                                options: {
+                                    scales: {
+                                        yAxes: [{
+                                            gridLines: {
+                                                drawOnChartArea: false
+                                            },
+                                            id: '0',
+                                            type: 'linear',
+                                            position: 'left',
+                                            weight: 4,
+                                            ticks: {
+                                                userCallback: function(label, index, labels) {
+                                                    return Math.round(label * 100) / 100 + '°C';
+                                                }
+                                            }
+                                            }, {
+                                            gridLines: {
+                                                drawOnChartArea: false
+                                            },
+                                            id: '1',
+                                            type: 'linear',
+                                            position: 'left',
+                                            weight: 3,
+                                            ticks: {
+                                                userCallback: function(label, index, labels) {
+                                                    return Math.round(label * 100) / 100 + "%";
+                                                }
+                                            }
+                                        }, {
+                                            gridLines: {
+                                                drawOnChartArea: false
+                                            },
+                                            id: '2',
+                                            type: 'linear',
+                                            position: 'left',
+                                            weight: 2,
+                                            ticks: {
+                                                userCallback: function(label, index, labels) {
+                                                    return Math.round(label * 100) / 100 + "bar";
+                                                }
+                                            }
+                                        }, {
+                                            gridLines: {
+                                                drawOnChartArea: false
+                                            },
+                                            id: '3',
+                                            type: 'linear',
+                                            position: 'left',
+                                            weight: 1,
+                                            ticks: {
+                                                userCallback: function(label, index, labels) {
+                                                    return Math.round(label * 100) / 100;
+                                                }
+                                            }
+                                        }]
+                                    }
+                                }
+                            };
+                            var myChart = new Chart(ctx, chartdata);
+
+                            function switchType() {
+                                var newType = document.getElementById('lijn').checked ? 'line' : 'bar';
+                                if (chartdata.type === newType) {
+                                    return;
+                                }
+                                if (newType === 'line') {
+                                    myChart.destroy();
+                                    chartdata.type = newType;
+                                    for (var i = 0; i < chartdata.data.datasets.length; i++) {
+                                        chartdata.data.datasets[i].backgroundColor = 'rgba(0,0,0,0)';
+                                    }
+                                    myChart = new Chart(ctx, chartdata);
+                                }
+                                else if (newType === 'bar') {
+                                    myChart.destroy();
+                                    chartdata.type = newType;
+                                    for (var i = 0; i < chartdata.data.datasets.length; i++) {
+                                        chartdata.data.datasets[i].backgroundColor = chartdata.data.datasets[i].borderColor;
+                                    }
+                                    myChart = new Chart(ctx, chartdata);
+                                }
+                            }
+
+                            switchType();
+
+                            function toggleData(name) {
+                                for (var i = 0; i < chartdata.data.datasets.length; i++) {
+                                    if (chartdata.data.datasets[i].label === name) {
+                                        chartdata.data.datasets[i].hidden = !document.getElementById(name).checked;
+                                        chartdata.options.scales.yAxes[i].display = document.getElementById(name).checked;
+                                        myChart.update();
+                                        break;
+                                    }
+                                }
+                            }
+
+                            function redirectParam(param, value) {
+                                window.location.href = '//' + location.host + location.pathname + '?' + param + '=' + value;
+                            }
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

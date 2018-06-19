@@ -1,0 +1,1159 @@
+/*------------------------------------*\
+  #FONTS
+\*------------------------------------*/
+
+@font-face {
+    font-family: "Inter UI";
+    font-weight: 400;
+    src: url("../fonts/Inter-UI-Regular.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Inter UI";
+    font-weight: 700;
+    src: url("../fonts/Inter-UI-Bold.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Inter UI";
+    font-weight: 600;
+    src: url("../fonts/Inter-UI-Medium.woff2") format("woff2");
+}
+
+/*------------------------------------*\
+  #GENERIC
+\*------------------------------------*/
+
+/*
+    Generic: Page
+    ---
+    Global page styles
+*/
+
+html {
+    font-size: 16px;
+    line-height: 1.5;
+    font-family: "Inter UI", arial, sans-serif;
+    color: #111;
+    box-sizing: border-box;
+    background-color: #E1E6E5;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+/*
+ * Remove text-shadow in selection highlight:
+ * https://twitter.com/miketaylr/status/12228805301
+ *
+ * Customize the background color to match your design.
+ */
+
+::-moz-selection {
+    background: white;
+    color: black;
+    text-shadow: none;
+}
+
+::selection {
+    background: white;
+    color: black;
+    text-shadow: none;
+}
+
+/*------------------------------------*\
+  #Elements
+\*------------------------------------*/
+
+/*
+    Elements: Images
+    ---
+    Default markup for images to make them responsive
+*/
+
+img {
+    max-width: 100%;
+    vertical-align: top;
+}
+
+/*
+    Elements: typography
+    ---
+    Default markup for typographic elements
+*/
+
+h1 {
+    font-size: 36px;
+    font-weight: normal;
+    line-height: 40px;
+    margin: 0 0 24px;
+}
+
+/* Example inline media query */
+
+@media (min-width: 768px) {
+    h1 {
+        font-size: 58px;
+        line-height: 64px;
+    }
+}
+
+h2 {
+    font-size: 23px;
+    line-height: 32px;
+    margin: 0 0 24px;
+}
+
+h3 {
+    font-size: 18px;
+    line-height: 24px;
+    margin: 0 0 24px;
+}
+
+h4, h5, h6 {
+    font-size: 16px;
+    line-height: 24px;
+    margin: 0 0 24px;
+}
+
+p, ol, ul, dl, table, address, figure {
+    margin: 0 0 24px;
+}
+
+ul, ol {
+    padding-left: 24px;
+}
+
+li ul, li ol {
+    margin-bottom: 0;
+}
+
+blockquote {
+    font-style: italic;
+    font-size: 23px;
+    line-height: 32px;
+    margin: 0 0 24px;
+    font-family: "Times New Roman", serif;
+}
+
+blockquote * {
+    font-size: inherit;
+    line-height: inherit;
+}
+
+figcaption {
+    font-size: 12px;
+    line-height: 16px;
+    padding-top: 8px;
+    color: Grey;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: LightGrey;
+    margin: 0 0 24px;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:visited, a:active {
+    color: BlueViolet;
+}
+
+a:hover, a:focus {
+}
+
+select {
+    background-color: #F7FFFD;
+    color: #2D3333;
+    border: 1px solid #A6B3AF;
+    border-radius: 5%;
+}
+
+option {
+    background-color: #F7FFFD;
+    color: #2D3333;
+}
+
+/*------------------------------------*\
+  #OBJECTS
+\*------------------------------------*/
+
+/*
+    Objects: Row
+    ---
+    Creates a horizontal row that stretches the viewport and adds padding around children
+*/
+
+.o-row {
+    overflow: auto;
+    padding: 24px 24px 0;
+}
+
+.o-row--primary {
+    background: #e85e00;
+    color: #fff;
+}
+
+.o-row--grey-dark {
+    background: #111;
+    color: #fff;
+}
+
+@media (min-width: 768px) {
+    .o-row--lg {
+        padding: 48px 48px 24px;
+    }
+}
+
+/*
+    Objects: Container
+    ---
+    Creates a horizontal container that sets de global max-width
+*/
+
+.o-container {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1170px;
+}
+
+/*
+    Objects: Layout
+    ---
+    The layout object provides us with a column-style layout system. This object
+    contains the basic structural elements, but classes should be complemented
+    with width utilities
+*/
+
+.o-layout {
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.o-layout__item {
+    width: 100%;
+}
+
+/* gutter modifiers, these affect o-layout__item too */
+
+.o-layout--gutter {
+    margin: 0 -12px;
+}
+
+.o-layout--gutter > .o-layout__item {
+    padding: 0 12px;
+}
+
+.o-layout--gutter-sm {
+    margin: 0 -6px;
+}
+
+.o-layout--gutter-sm > .o-layout__item {
+    padding: 0 6px;
+}
+
+.o-layout--gutter-lg {
+    margin: 0 -24px;
+}
+
+.o-layout--gutter-lg > .o-layout__item {
+    padding: 0 24px;
+}
+
+/* reverse horizontal row modifier */
+
+.o-layout--row-reverse {
+    flex-direction: row-reverse;
+}
+
+/* Horizontal alignment modifiers*/
+
+.o-layout--justify-start {
+    justify-content: flex-start;
+}
+
+.o-layout--justify-end {
+    justify-content: flex-end;
+}
+
+.o-layout--justify-center {
+    justify-content: center;
+}
+
+.o-layout--justify-space-around {
+    justify-content: space-around;
+}
+
+.o-layout--justify-space-evenly {
+    justify-content: space-evenly;
+}
+
+.o-layout--justify-space-between {
+    justify-content: space-between;
+}
+
+/* Vertical item alignment modifiers */
+
+.o-layout--align-start {
+    align-items: flex-start;
+}
+
+.o-layout--align-end {
+    align-items: flex-end;
+}
+
+.o-layout--align-center {
+    align-items: center;
+}
+
+.o-layout--align-baseline {
+    align-items: baseline;
+}
+
+/* Vertical content alignment modifiers. Only work if there is one than one flex item */
+
+.o-layout--align-content-start {
+    align-content: flex-start;
+}
+
+.o-layout--align-content-end {
+    align-content: flex-end;
+}
+
+.o-layout--align-content-center {
+    align-content: center;
+}
+
+.o-layout--align-content-space-around {
+    align-content: space-around;
+}
+
+.o-layout--align-content-space-between {
+    align-content: space-between;
+}
+
+/*------------------------------------*\
+  #COMPONENTS
+\*------------------------------------*/
+
+/*
+    Component: layout block
+    ---
+    A small component to demonstrate the layout items
+*/
+
+.c-layout-block {
+    background-color: LightGrey;
+    padding: 8px 12px;
+    font-size: 14px;
+    line-height: 16px;
+}
+
+.c-layout-block--ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/*
+    Component: header
+    ---
+    Header of the Page
+*/
+
+.c-header {
+    background-color: #049372;
+    padding: 20px;
+    font-size: 12px;
+}
+
+@media (min-width: 576px) {
+    .c-header {
+        padding: 20px;
+        font-size: 20px;
+    }
+}
+
+@media (min-width: 768px) {
+    .c-header {
+        padding: 30px;
+        font-size: 30px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .c-header {
+        padding: 40px;
+        font-size: 40px;
+    }
+}
+
+.c-header__title, .c-header__title > a {
+    color: #F7FFFD;
+}
+
+.c-header__nav, .c-header__nav > a {
+    color: #F7FFFD;
+}
+
+/*
+    Component: blocks
+    ---
+    Building blocks of the page
+*/
+
+.c-content-row {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+@media (min-width: 768px) {
+    .c-content-row {
+        margin-top: 16px;
+        margin-bottom: 16px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .c-content-row {
+        margin-top: 24px;
+        margin-bottom: 24px;
+    }
+}
+
+.c-block {
+    background-color: #F7FFFD;
+    padding: 40px;
+    height: 100%;
+}
+
+/*
+    Component: current weather
+    ---
+    Current weather block
+*/
+
+.c-current-weather {
+    float: left;
+}
+
+.c-current-weather > h1 {
+    color: #2D3333;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.c-current-weather > p {
+    color: #17AD8B;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+@media (min-width: 576px) {
+    .c-current-weather > h1 {
+        font-size: 20px;
+    }
+
+    .c-current-weather > p {
+        font-size: 16px;
+    }
+}
+
+@media (min-width: 768px) {
+    .c-current-weather > h1 {
+        font-size: 30px;
+    }
+
+    .c-current-weather > p {
+        font-size: 24px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .c-current-weather > h1 {
+        font-size: 40px;
+    }
+
+    .c-current-weather > p {
+        font-size: 30px;
+    }
+}
+
+/*
+    Component: settings
+    ---
+    settings for graph on /chart page
+*/
+
+.c-graph-settings__title {
+    font-size: 12px;
+}
+
+.c-graph-settings__svg {
+    max-width: 16px;
+    transition: all 0.2s ease;
+}
+
+/* Customize the label (the container) */
+.c-graph-settings__label {
+    display: block;
+    position: relative;
+    padding-left: 10px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    text-align: left;
+    color: #2D3333;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.c-graph-settings__label input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Create a custom checkbox */
+.c-graph-settings__label-checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 10px;
+    width: 10px;
+    background-color: #C2CCC9;
+}
+
+/* On mouse-over, add a grey background color */
+.c-graph-settings__label:hover input ~ .c-graph-settings__label-checkmark {
+    background-color: #8D9997;
+}
+
+/* When the checkbox is checked, add a blue background */
+.c-graph-settings__label input:checked ~ .c-graph-settings__label-checkmark {
+    background-color: #17AD8B;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.c-graph-settings__label-checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.c-graph-settings__label input:checked ~ .c-graph-settings__label-checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.c-graph-settings__label .c-graph-settings__label-checkmark:after {
+    left: 7px;
+    top: 0;
+    width: 4px;
+    height: 8px;
+    border: solid #F7FFFD;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.c-graph-settings-menu {
+    overflow: hidden;
+}
+
+.c-graph-settings-menu-shown {
+    visibility: visible;
+    height: 100px;
+    transition: all .5s ease;
+}
+
+.c-graph-settings-menu-hidden {
+    visibility: hidden;
+    height: 0;
+    transition: all .5s ease;
+}
+
+@media (min-width: 576px) {
+    .c-graph-settings__svg {
+        max-width: 20px;
+    }
+    .c-graph-settings__title {
+        font-size: 16px;
+    }
+    .c-graph-settings__label {
+        padding-left: 20px;
+        margin-bottom: 10px;
+        font-size: 16px;
+    }
+    .c-graph-settings__label-checkmark {
+        width: 12px;
+        height: 12px;
+    }
+
+    .c-graph-settings__label .c-graph-settings__label-checkmark:after {
+        width: 5px;
+        height: 10px;
+    }
+
+    .c-graph-settings-menu-shown {
+        height: 140px;
+    }
+}
+
+@media (min-width: 768px) {
+    .c-graph-settings__svg {
+        max-width: 35px;
+    }
+    .c-graph-settings__title {
+        font-size: 30px;
+    }
+    .c-graph-settings__label {
+        padding-left: 24px;
+        margin-bottom: 10px;
+        font-size: 20px;
+    }
+    .c-graph-settings__label-checkmark {
+        width: 20px;
+        height: 20px;
+    }
+
+    .c-graph-settings__label .c-graph-settings__label-checkmark:after {
+        width: 8px;
+        height: 16px;
+        border-width: 0 3px 3px 0;
+    }
+
+    .c-graph-settings-menu-shown {
+        height: 160px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .c-graph-settings__svg {
+        max-width: 50px;
+    }
+    .c-graph-settings__title {
+        font-size: 40px;
+    }
+    .c-graph-settings__label {
+        padding-left: 35px;
+        margin-bottom: 12px;
+        font-size: 22px;
+    }
+
+    .c-graph-settings__label-checkmark {
+        width: 25px;
+        height: 25px;
+    }
+
+    .c-graph-settings__label .c-graph-settings__label-checkmark:after {
+        width: 10px;
+        height: 20px;
+    }
+
+    .c-graph-settings-menu-shown {
+        height: 200px;
+    }
+}
+
+/*
+    Component: statistics
+    ---
+    statistics table
+*/
+
+.c-statistics__head {
+    color: #2D3333;
+    font-size: 12px;
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+.c-statistics__data {
+    padding: 0 12px;
+    color: #5C6663;
+    font-size: 10px;
+}
+
+@media (min-width: 576px) {
+    .c-statistics__head {
+        font-size: 16px;
+        margin-bottom: 16px;
+    }
+
+    .c-statistics__data {
+        font-size: 12px;
+    }
+}
+
+@media (min-width: 768px) {
+    .c-statistics__head {
+        font-size: 24px;
+        margin-bottom: 24px;
+    }
+
+    .c-statistics__data {
+        font-size: 16px;
+        padding: 0 16px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .c-statistics__head {
+        font-size: 30px;
+        margin-bottom: 30px;
+    }
+
+    .c-statistics__data {
+        font-size: 20px;
+        padding: 0 20px;
+    }
+}
+
+/*------------------------------------*\
+  #UTILITIES
+\*------------------------------------*/
+
+.u-flipped {
+    transition: all 0.2s ease;
+    transform: scaleY(-1);
+}
+
+.u-border-bottom {
+    border-bottom: 2px solid #2D3333;
+}
+
+.u-hidden {
+    display: none;
+}
+
+.u-enlarge-hover {
+    transition: all 0.2s ease-in-out;
+    transform: scale(1);
+}
+
+.u-enlarge-hover:hover {
+    transform: scale(1.02);
+}
+
+.u-vertical-line-right {
+    border-right: solid 1px #8D9997;
+}
+
+/*  Utilities: clear margin/padding
+    ---
+    Utility classes to remove specific padding or margin on certain elements
+*/
+
+.u-clear-margin-top {
+    margin-top: 0;
+}
+
+/*  Utilities: Text-align
+    ---
+    Utility classes to align text specifically
+*/
+
+.u-text-align-left {
+    text-align: left;
+}
+
+.u-text-align-right {
+    text-align: right;
+}
+
+.u-text-align-center {
+    text-align: center;
+}
+
+/*
+    Utilities: max-width
+    ---
+    Utility classes to put specific max widths onto elements.
+*/
+
+.u-max-width-sm {
+    max-width: 36em;
+}
+
+.u-max-width-md {
+    max-width: 45em;
+}
+
+.u-max-width-lg {
+    max-width: 60em;
+}
+
+.u-max-width-xl {
+    max-width: 75em;
+}
+
+/*
+    Utility: Widths
+    ---
+    Utility classes to put specific widths onto elements
+    Will be mostly used on o-layout__item
+*/
+
+.u-width-auto {
+}
+
+.u-1-of-1 {
+    max-width: 100% !important;
+}
+
+.u-1-of-2 {
+    max-width: 50% !important;
+}
+
+.u-1-of-3 {
+    max-width: 33.3333333% !important;
+}
+
+.u-2-of-3 {
+    max-width: 66.6666667% !important;
+}
+
+.u-1-of-4 {
+    max-width: 25% !important;
+}
+
+.u-3-of-4 {
+    max-width: 75% !important;
+}
+
+.u-1-of-5 {
+    max-width: 20% !important;
+}
+
+.u-2-of-5 {
+    max-width: 40% !important;
+}
+
+.u-3-of-5 {
+    max-width: 60% !important;
+}
+
+.u-4-of-5 {
+    max-width: 80% !important;
+}
+
+.u-1-of-6 {
+    max-width: 16.6666667% !important;
+}
+
+.u-5-of-6 {
+    max-width: 83.3333333% !important;
+}
+
+@media (min-width: 576px) {
+    .u-1-of-1-bp1 {
+        max-width: 100% !important;
+    }
+
+    .u-1-of-2-bp1 {
+        max-width: 50% !important;
+    }
+
+    .u-1-of-3-bp1 {
+        max-width: 33.3333333% !important;
+    }
+
+    .u-2-of-3-bp1 {
+        max-width: 66.6666667% !important;
+    }
+
+    .u-1-of-4-bp1 {
+        max-width: 25% !important;
+    }
+
+    .u-3-of-4-bp1 {
+        max-width: 75% !important;
+    }
+
+    .u-1-of-5-bp1 {
+        max-width: 20% !important;
+    }
+
+    .u-2-of-5-bp1 {
+        max-width: 40% !important;
+    }
+
+    .u-3-of-5-bp1 {
+        max-width: 60% !important;
+    }
+
+    .u-4-of-5-bp1 {
+        max-width: 80% !important;
+    }
+
+    .u-1-of-6-bp1 {
+        max-width: 16.6666667% !important;
+    }
+
+    .u-5-of-6-bp1 {
+        max-width: 83.3333333% !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .u-1-of-1-bp2 {
+        max-width: 100% !important;
+    }
+
+    .u-1-of-2-bp2 {
+        max-width: 50% !important;
+    }
+
+    .u-1-of-3-bp2 {
+        max-width: 33.3333333% !important;
+    }
+
+    .u-2-of-3-bp2 {
+        max-width: 66.6666667% !important;
+    }
+
+    .u-1-of-4-bp2 {
+        max-width: 25% !important;
+    }
+
+    .u-3-of-4-bp2 {
+        max-width: 75% !important;
+    }
+
+    .u-1-of-5-bp2 {
+        max-width: 20% !important;
+    }
+
+    .u-2-of-5-bp2 {
+        max-width: 40% !important;
+    }
+
+    .u-3-of-5-bp2 {
+        max-width: 60% !important;
+    }
+
+    .u-4-of-5-bp2 {
+        max-width: 80% !important;
+    }
+
+    .u-1-of-6-bp2 {
+        max-width: 16.6666667% !important;
+    }
+
+    .u-5-of-6-bp2 {
+        max-width: 83.3333333% !important;
+    }
+}
+
+@media (min-width: 992px) {
+    .u-1-of-1-bp3 {
+        max-width: 100% !important;
+    }
+
+    .u-1-of-2-bp3 {
+        max-width: 50% !important;
+    }
+
+    .u-1-of-3-bp3 {
+        max-width: 33.3333333% !important;
+    }
+
+    .u-2-of-3-bp3 {
+        max-width: 66.6666667% !important;
+    }
+
+    .u-1-of-4-bp3 {
+        max-width: 25% !important;
+    }
+
+    .u-3-of-4-bp3 {
+        max-width: 75% !important;
+    }
+
+    .u-1-of-5-bp3 {
+        max-width: 20% !important;
+    }
+
+    .u-2-of-5-bp3 {
+        max-width: 40% !important;
+    }
+
+    .u-3-of-5-bp3 {
+        max-width: 60% !important;
+    }
+
+    .u-4-of-5-bp3 {
+        max-width: 80% !important;
+    }
+
+    .u-1-of-6-bp3 {
+        max-width: 16.6666667% !important;
+    }
+
+    .u-5-of-6-bp3 {
+        max-width: 83.3333333% !important;
+    }
+}
+
+@media (min-width: 1200px) {
+    .u-1-of-1-bp4 {
+        max-width: 100% !important;
+    }
+
+    .u-1-of-2-bp4 {
+        max-width: 50% !important;
+    }
+
+    .u-1-of-3-bp4 {
+        max-width: 33.3333333% !important;
+    }
+
+    .u-2-of-3-bp4 {
+        max-width: 66.6666667% !important;
+    }
+
+    .u-1-of-4-bp4 {
+        max-width: 25% !important;
+    }
+
+    .u-3-of-4-bp4 {
+        max-width: 75% !important;
+    }
+
+    .u-1-of-5-bp4 {
+        max-width: 20% !important;
+    }
+
+    .u-2-of-5-bp4 {
+        max-width: 40% !important;
+    }
+
+    .u-3-of-5-bp4 {
+        max-width: 60% !important;
+    }
+
+    .u-4-of-5-bp4 {
+        max-width: 80% !important;
+    }
+
+    .u-1-of-6-bp4 {
+        max-width: 16.6666667% !important;
+    }
+
+    .u-5-of-6-bp4 {
+        max-width: 83.3333333% !important;
+    }
+}
+
+/*------------------------------------*\
+  #MEDIA
+\*------------------------------------*/
+
+/*
+    Media Queries
+    ---
+    EXAMPLE Media Queries for Responsive Design.
+    These examples override the primary ('mobile first') styles.
+    USE THEM INLINE!
+*/
+
+/* Extra small devices (portrait phones, less than 576px)
+   No media query since this is the default in mobile first design
+*/
+
+/* Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {}
+*/
+
+/* Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {}
+*/
+
+/* Large devices (landscape tablets, desktops, 992px and up)
+@media (min-width: 992px) {}
+*/
+
+/* Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {}
+*/
+
+/*
+    Print styles.
+    ---
+    Inlined to avoid the additional HTTP request:
+    http://www.phpied.com/delay-loading-your-print-css/
+*/
+
+@media print {
+    *, *:before, *:after {
+        background: transparent !important;
+        color: #000 !important;
+        /* Black prints faster:
+                                       http://www.sanbeiji.com/archives/953 */
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    a, a:visited {
+        text-decoration: underline;
+    }
+
+    a[href]:after {
+        content: " (" attr(href) ")";
+    }
+
+    abbr[title]:after {
+        content: " (" attr(title) ")";
+    }
+
+    /*
+       * Don't show links that are fragment identifiers,
+       * or use the `javascript:` pseudo protocol
+       */
+    a[href^="#"]:after, a[href^="javascript:"]:after {
+        content: "";
+    }
+
+    pre {
+        white-space: pre-wrap !important;
+    }
+
+    pre, blockquote {
+        border: 1px solid #999;
+        page-break-inside: avoid;
+    }
+
+    /*
+       * Printing Tables:
+       * http://css-discuss.incutio.com/wiki/Printing_Tables
+       */
+    thead {
+        display: table-header-group;
+    }
+
+    tr, img {
+        page-break-inside: avoid;
+    }
+
+    p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+    }
+
+    h2, h3 {
+        page-break-after: avoid;
+    }
+}
